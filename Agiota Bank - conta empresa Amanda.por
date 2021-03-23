@@ -9,7 +9,7 @@ programa
 		
 	inteiro tipoConta
 		cadeia cpf
-		real saldo = 1000
+		real saldo = 0
 		cadeia opcaoPoupanca
 		real debitoPoupanca
 		real creditoPoupanca
@@ -32,7 +32,7 @@ programa
 		escreva("        [Carregando sistema...] \n")
 		escreva("        ")
 		
-		para (inteiro x = 0; x < 1; x++) {
+		para (inteiro x = 0; x < 23; x++) {
 
 			escreva("█")	
 			U.aguarde(200)
@@ -40,7 +40,7 @@ programa
 
 		escreva("\n")
 		escreva("\n         [Sistema carregado].")
-		U.aguarde(200)
+		U.aguarde(2000)
 		limpa()
 
 		
@@ -76,11 +76,37 @@ programa
 			escreva("\n")
 			escreva("\n")
 			
-			escreva("• CONTA POUPANÇA \n")
+			contaPoupanca(saldo)
+			
+		} senao se (tipoConta == 2) {
+			contaCorrente(saldo)
+		} senao se (tipoConta == 3) {
+			contaEspecial(saldo)
+		} senao se (tipoConta == 4) {
+			contaEmpresa(saldo)
+		} senao se (tipoConta == 5) {
+			contaEstudantil(saldo)
+		} senao {
+			
+			escreva("Obrigado por escolher o AgiotaBank® e volte sempre!")
+				
+		}
+	} enquanto(tipoConta != 6)
+	}
+
+	funcao contaPoupanca(real saldo) {
+		escreva("•CONTA POUPANÇA | [Digite (sair) para voltar ao menu]\n")
 			escreva("\nSaldo Atual: R$" + saldo + "\n")
 
 			para (inteiro x = 0; x < 10; x++) {
 
+				cadeia opcaoPoupanca
+				cadeia opcaoCorrente
+				real debitoPoupanca
+				real creditoPoupanca
+
+
+				
 				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] ")
 				leia(opcaoPoupanca)
 
@@ -102,7 +128,13 @@ programa
 					leia(creditoPoupanca)
 
 					saldo = credito(saldo, creditoPoupanca)
-				} senao {
+				} 
+				senao se (opcaoPoupanca == "Sair" ou opcaoPoupanca == "sair") {
+					escreva("Voltando ao menu...")
+					U.aguarde(2000)
+					pare
+					}
+				senao {
 					escreva("\nPor favor, insira uma opção válida.\n")
 				}
 			} 
@@ -121,24 +153,8 @@ programa
 				U.aguarde(3000)
 				
 			}
-
-
 			
-		} senao se (tipoConta == 2) {
-			contaCorrente(saldo)
-		} senao se (tipoConta == 3) {
-			contaEspecial(saldo)
-		} senao se (tipoConta == 4) {
-			contaEmpresa(saldo)
-		} senao se (tipoConta == 5) {
-			contaEstudantil(saldo)
-		} senao {
-			
-			escreva("Obrigado por escolher o AgiotaBank® e volte sempre!")
-				
-		}
-	} enquanto(tipoConta != 6)
-	}
+	 }
 
 	funcao contaCorrente (real saldo) {
 		cadeia opcaoCorrente
@@ -148,11 +164,9 @@ programa
 		inteiro numeroTalao
 		inteiro contadorTalao = 3
 
-		limpa()
-		escreva("• CONTA CORRENTE \n")
 		para (inteiro y = 0; y < 10; y++) {
 
-				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] ")
+				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] / [Sair]")
 				leia(opcaoCorrente)
 
 				se (opcaoCorrente == "deb" ou opcaoCorrente == "débito" ou opcaoCorrente == "Débito") {
@@ -172,7 +186,16 @@ programa
 					
 					saldo = credito(saldo, creditoCorrente)
 					escreva("\nO novo saldo é: R$" ,saldo, ".\n")
-				} senao {
+
+				} 
+				
+				senao se(opcaoCorrente == "sair" ou opcaoCorrente == "s" ou opcaoCorrente == "SIM") {
+						escreva("Voltando ao menu...")
+						U.aguarde(2000)
+						pare
+					}
+				
+				senao {
 					escreva("\nPor favor, insira uma opção válida.\n")
 				}
 			}
@@ -216,7 +239,7 @@ programa
 			
 			para (inteiro x = 0; x < 10; x++) {
 
-				escreva("•CONTA ESPECIAL | [Digite (sair) para voltar ao menu]\n")
+				escreva("•CONTA ESPECIAL | [Digite (sair) para voltar ao menu]\n")escreva("•CONTA ESPECIAL | [Digite (sair) para voltar ao menu]\n")
 				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] / [Sair]")
 				leia(opcaoPoupanca)
 				
@@ -278,7 +301,7 @@ programa
 			
 			para (inteiro x = 0; x < 10; x++) {
 
-				escreva("• CONTA EMPRESA \n")
+				escreva("•CONTA EMPRESA | [Digite (sair) para voltar ao menu]\n")
 				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] ")
 				leia(opcaoPoupanca)
 
@@ -304,7 +327,12 @@ programa
 					saldo = credito(saldo, pedidoCredito)
 
 					escreva("Seu saldo atual é R$", saldo)
-					
+					}
+
+					senao se(opcaoPoupanca == "sair" ou opcaoPoupanca == "s" ou opcaoPoupanca == "SIM") {
+						escreva("Voltando ao menu...")
+						U.aguarde(2000)
+						pare
 					}
 
 				escreva("\nDeseja fazer um empréstimo? Seu saldo atual é R$", saldo, "   [S/N]: ")
@@ -339,7 +367,7 @@ programa
 			
 			para (inteiro x = 0; x < 10; x++) {
 
-				escreva("• CONTA ESTUDANTIL \n")
+				escreva("•CONTA ESTUDANTIL| [Digite (sair) para voltar ao menu]\n")
 				escreva("\nPor favor, insira a operação desejada:\n[Débito] / [Crédito] ")
 				leia(opcaoPoupanca)
 
@@ -365,6 +393,11 @@ programa
 
 					escreva("Seu saldo agora é: ", saldo)
 					}
+				senao se(opcaoPoupanca == "sair" ou opcaoPoupanca == "s" ou opcaoPoupanca == "SIM") {
+					escreva("Voltando ao menu...")
+					U.aguarde(2000)
+					pare
+					}
 
 				escreva("\nDeseja fazer um empréstimo? Seu saldo atual é R$", saldo, "   [S/N]: ")
 				leia(opcaoEmprestimo)
@@ -379,7 +412,7 @@ programa
 					senao {
 						limiteEmprestimo = limiteEmprestimo - pedidoEmprestimo
 						saldo = saldo + pedidoEmprestimo
-						escreva("Parabéns, seu novo saldo é R$", saldo, " e o novo limite de empréstimo é R$", limiteEmprestimo)
+						escreva("Parabéns, seu novo saldo é R$", saldo, " e o novo limite de empréstimo é R$", limiteEmprestimo, "\n")
 						}
 					
 
@@ -399,7 +432,7 @@ programa
 
 		retorne saldo
 		}
-	 
+	
 	 funcao estilo() {
 	 	escreva("________________________________________")
 	 }
@@ -418,8 +451,19 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 4578; 
- * @DOBRAMENTO-CODIGO = [130, 134, 204, 268, 329, 390, 396, 406, 410];
+ * @POSICAO-CURSOR = 11377; 
+ * @DOBRAMENTO-CODIGO = [96, 158, 227, 291, 423, 429, 435];
+ * @PONTOS-DE-PARADA = ;
+ * @SIMBOLOS-INSPECIONADOS = ;
+ * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
+ * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
+ */
+/* $$$ Portugol Studio $$$ 
+ * 
+ * Esta seção do arquivo guarda informações do Portugol Studio.
+ * Você pode apagá-la se estiver utilizando outro editor.
+ * 
+ * @POSICAO-CURSOR = 12683; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
